@@ -1,12 +1,20 @@
 // Register.jsx
-import React from "react";
+import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Register() {
+
+// --------------------Hide and show password
+const [showpass,setShowpass]=useState(false)
+
+
+
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
-        <form className="space-y-4">
+        <div className="space-y-4">
           {/* Username */}
           <div>
             <label className="block text-gray-700 mb-1">Username</label>
@@ -40,11 +48,22 @@ export default function Register() {
           {/* Confirm Password */}
           <div>
             <label className="block text-gray-700 mb-1">Confirm Password</label>
+            <div className="flex justify-between items-center w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
             <input
-              type="password"
+              type={showpass?"text":"password"}
               placeholder="Confirm password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+              className="w-[60%] outline-none"
+              />
+              <button className="cursor-pointer"
+              onClick={()=>setShowpass(!showpass)}
+              >
+               {
+                showpass ? <FaEyeSlash />
+                         : <FaEye/>
+               }
+              </button>
+            </div>
           </div>
 
           {/* Register Button */}
@@ -62,7 +81,7 @@ export default function Register() {
               Login
             </a>
           </p>
-        </form>
+        </div>
       </div>
     </div>
   );
