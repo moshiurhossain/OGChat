@@ -1,42 +1,75 @@
 // Register.jsx
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { MdError } from "react-icons/md";
+// import { MdError } from "react-icons/md";
+// import { getDatabase } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Register() {
 
 // --------------------Hide and show password
 const [showpass,setShowpass]=useState(false)
+
+
 // --------------------set username
 const [userName,setUserName]=useState('')
 // --------------------set usernameError!!
 const [usernameError,setUserNameError]=useState('')
+
+
 // --------------------set email
 const [email,setEmail]=useState('')
 // -------------------set emailError
 const [emailError,setEmailError]=useState('')
+
+
 // --------------------set password
 const [password,setPassword]=useState('')
 // -------------------set passworError
 const [passwordError,setPasswordError]=useState('')
+
+
 // -------------------set confirmPassword
 const [confirmPassword,setConfirmPassword]=useState('')
 // -------------------set ConfirmPassworError
 const [confirmPasswordError,setConfirmPasswordError]=useState('')
 
+
+// ------------getAuth from firebase
+const auth = getAuth();
+
+
+
 // -------------------handleSubmit()
 const handleSubmit =()=>{
+  // ------------------------------Check for Validation-----------------------------------------
     // check for username
     if(!userName) return setUserNameError(`username is required `)
   
     // check for email
     if(!email) return setEmailError('email is required')
  
-    if(!password) return setPasswordError('username is required')
+    if(!password) return setPasswordError('password is required')
     
-    if(!confirmPassword) return setConfirmPasswordError(`password doesn't match`)
+    if(!confirmPassword) return setConfirmPasswordError(`you must confirm password`)
+      if(password != confirmPassword) return setConfirmPasswordError(`password doesn't match`)
+      //-----------------------------Get firebase auth--------------------------------- 
+    
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    // ...
+    console.log(userCredential)
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+    console.log(error)
+  });
      
-    console.log(userName)
+
 // when validation is complete
 
 }
