@@ -18,28 +18,24 @@ const [emailError,setEmailError]=useState('')
 // --------------------set password
 const [password,setPassword]=useState('')
 // -------------------set passworError
-const [passwordError,setPasswordErro]=useState('')
-
+const [passwordError,setPasswordError]=useState('')
+// -------------------set confirmPassword
+const [confirmPassword,setConfirmPassword]=useState('')
+// -------------------set ConfirmPassworError
+const [confirmPasswordError,setConfirmPasswordError]=useState('')
 
 // -------------------handleSubmit()
 const handleSubmit =()=>{
     // check for username
-    if(!userName){
-        return setUserNameError(`username is required `)
-    }else{
-        return setUserNameError('')
-    }
+    if(!userName) return setUserNameError(`username is required `)
+  
     // check for email
-    if(!email){
-     return setEmailError('email is required')
-    }else{
-        return setEmailError('')
-    } 
-    if(!password){
-         return setPasswordErro('username is required')
-        }else{
-            return setPasswordErro('')
-        }
+    if(!email) return setEmailError('email is required')
+ 
+    if(!password) return setPasswordError('username is required')
+    
+    if(!confirmPassword) return setConfirmPasswordError(`password doesn't match`)
+     
     console.log(userName)
 // when validation is complete
 
@@ -55,7 +51,7 @@ const handleSubmit =()=>{
           <div>
             <label className="block text-gray-700 mb-1">Username</label>
             <input
-            onChange={(e)=>setUserName(e.target.value)}
+            onChange={(e)=>{setUserName(e.target.value), setUserNameError('')}}
               type="text"
               placeholder="Enter username"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -67,7 +63,7 @@ const handleSubmit =()=>{
           <div>
             <label className="block text-gray-700 mb-1">Email</label>
             <input
-            onChange={(e)=>setEmail(e.target.value)}
+            onChange={(e)=>{setEmail(e.target.value), setEmailError('')}}
               type="email"
               placeholder="Enter email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -79,7 +75,7 @@ const handleSubmit =()=>{
           <div>
             <label className="block text-gray-700 mb-1">Password</label>
             <input
-              onChange={(e)=>setPassword(e.target.value)}
+              onChange={(e)=>{setPassword(e.target.value), setPasswordError('')}}
               type="password"
               placeholder="Enter password"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -93,19 +89,23 @@ const handleSubmit =()=>{
             <div className="flex justify-between items-center w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
 
             <input
+            onChange={(e)=>{setConfirmPassword(e.target.value), setConfirmPasswordError('')}}
               type={showpass?"text":"password"}
               placeholder="Confirm password"
               className="w-[60%] outline-none"
               />
+              {/* toggle button  */}
               <button className="cursor-pointer"
               onClick={()=>setShowpass(!showpass)}
+              
               >
                {
-                showpass ? <FaEyeSlash />
-                         : <FaEye/>
-               }
+                 showpass ? <FaEyeSlash />
+                 : <FaEye/>
+                }
               </button>
             </div>
+                <p className="mt-2 text-red-500 flex items-center gap-2 text-[12px] ml-1">{confirmPasswordError}</p>
           </div>
 
           {/* Register Button */}
