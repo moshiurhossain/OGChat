@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 // import { MdError } from "react-icons/md";
 // import { getDatabase } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Slide, toast } from "react-toastify";
 
 export default function Register() {
 
@@ -59,15 +60,43 @@ createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
-    // ...
     console.log(userCredential)
+    // ...tostify msg
+toast.success('🦄 Registered successfully', {
+position: "top-right",
+autoClose: 5000,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+theme: "colored",
+transition: Slide,
+});
+    // ------xxxxxx--------
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    // ..
     console.log(error)
-  });
+    console.log(errorCode)
+    // .............  tostify message
+    // if(errorCode ==='auth/email-already-in-use'){
+                toast.error(`${errorCode}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+            });
+}
+    // ------xxxxxx--------
+  // }
+  );
      
 
 // when validation is complete
