@@ -5,6 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 // import { getDatabase } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { Slide, toast } from "react-toastify";
+import { BeatLoader } from "react-spinners";
 
 export default function Register() {
 
@@ -36,6 +37,10 @@ const [confirmPassword,setConfirmPassword]=useState('')
 const [confirmPasswordError,setConfirmPasswordError]=useState('')
 
 
+// --------------------set showLoading
+const[showLoading,setShowLoading]=useState(true)
+
+
 // ------------getAuth from firebase
 const auth = getAuth();
 
@@ -53,13 +58,17 @@ const handleSubmit =()=>{
     if(!password) return setPasswordError('password is required')
     
     if(!confirmPassword) return setConfirmPasswordError(`you must confirm password`)
-      if(password != confirmPassword) return setConfirmPasswordError(`password doesn't match`)
+    if(password != confirmPassword) return setConfirmPasswordError(`password doesn't match`)
+      // ------- showloading
+    setShowLoading(false)
       //-----------------------------Get firebase auth--------------------------------- 
     
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
+    // -------setshowloading
+    setShowLoading(true)
     console.log(userCredential)
     // ...tostify msg
 toast.success('🦄 Registered successfully', {
@@ -78,6 +87,8 @@ transition: Slide,
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    // setloading
+    setShowLoading(true)
     console.log(error)
     console.log(errorCode)
     // .............  tostify message
@@ -171,13 +182,17 @@ transition: Slide,
           </div>
 
           {/* Register Button */}
-          <button
-            onClick={handleSubmit}
-            className="w-full cursor-pointer bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
-          >
-            Register
-          </button>
-
+       {
+       showLoading?
+        <button
+        onClick={handleSubmit}
+        className="w-full cursor-pointer bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+        >Register</button>
+          :
+       <button className="w-full cursor-progress bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+       > <BeatLoader color="#fff" />
+       </button>
+       }
           {/* Already have account */}
           <p className="text-center text-gray-600 text-sm mt-4">
             Already have an account?{" "}
