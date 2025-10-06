@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 // import { MdError } from "react-icons/md";
 // import { getDatabase } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { Slide, toast } from "react-toastify";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { Bounce, Slide, toast } from "react-toastify";
 import { BeatLoader } from "react-spinners";
 
 export default function Register() {
@@ -83,6 +83,24 @@ theme: "colored",
 transition: Slide,
 });
     // ------xxxxxx--------
+    // ----------------------sent OTP
+        sendEmailVerification(auth.currentUser)
+        .then(() => {
+         // Email verification sent! 
+         console.log('verification email sent')
+                toast.info('otp sent to email', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Bounce,
+                });
+        // ...
+        });
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -124,6 +142,7 @@ transition: Slide,
           <div>
             <label className="block text-gray-700 mb-1">Username</label>
             <input
+            // value={userName}
             onChange={(e)=>{setUserName(e.target.value), setUserNameError('')}}
               type="text"
               placeholder="Enter username"
@@ -136,6 +155,7 @@ transition: Slide,
           <div>
             <label className="block text-gray-700 mb-1">Email</label>
             <input
+            // value={email}
             onChange={(e)=>{setEmail(e.target.value), setEmailError('')}}
               type="email"
               placeholder="Enter email"
@@ -148,6 +168,7 @@ transition: Slide,
           <div>
             <label className="block text-gray-700 mb-1">Password</label>
             <input
+            // value={password}
               onChange={(e)=>{setPassword(e.target.value), setPasswordError('')}}
               type="password"
               placeholder="Enter password"
@@ -162,6 +183,7 @@ transition: Slide,
             <div className="flex justify-between items-center w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
 
             <input
+            // value={confirmPassword}
             onChange={(e)=>{setConfirmPassword(e.target.value), setConfirmPasswordError('')}}
               type={showpass?"text":"password"}
               placeholder="Confirm password"
