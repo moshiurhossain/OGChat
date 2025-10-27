@@ -4,11 +4,13 @@ import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Bounce, toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 
-const auth = getAuth();
 
 export default function Login() {
+  const auth = getAuth();
+  const navigate = useNavigate()
   const [email,setEmail]= useState('')
   const [password,setPassword]= useState('')
 
@@ -38,6 +40,8 @@ export default function Login() {
   theme: "light",
   transition: Bounce,
   });
+  // ----navigate
+  navigate('/')
 
     }else{
       toast.error(`Please verify email`, {
