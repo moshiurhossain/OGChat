@@ -10,6 +10,11 @@ import { ToastContainer, toast } from 'react-toastify';
 function App() {
  const myRoute = createBrowserRouter(createRoutesFromElements(
   <Route>
+    <Route path='/' element={<LayOutOne/>}>
+    <Route index element={<Home/>}/>
+    
+    
+    </Route>
   <Route path='/register'element={<Register/>}/>
   <Route path='/login'element={<Login/>}/>
 
