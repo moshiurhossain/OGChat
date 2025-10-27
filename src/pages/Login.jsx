@@ -26,8 +26,21 @@ export default function Login() {
     // Signed in 
     const user = userCredential.user;
     console.log(user)
-    // ... tostify msg
-    toast.success('logged-in successfully', {
+    if(user.emailVerified == true){
+      toast.success('logged-in successfully', {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+  transition: Bounce,
+  });
+
+    }else{
+      toast.error(`Please verify email`, {
 position: "top-right",
 autoClose: 5000,
 hideProgressBar: false,
@@ -38,6 +51,8 @@ progress: undefined,
 theme: "light",
 transition: Bounce,
 });
+    }
+    // ... tostify msg
     // -------xxxxxx------
   })
   .catch((error) => {

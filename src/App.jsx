@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router'
 import LayOutOne from './layouts/LayOutOne'
 import { ToastContainer, toast } from 'react-toastify';
+import Home from './pages/Home'
 
 function App() {
  const myRoute = createBrowserRouter(createRoutesFromElements(
